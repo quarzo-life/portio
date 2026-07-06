@@ -7,10 +7,9 @@ import {
   shares,
 } from "mod";
 
-const ISIN = "LU1234567890";
-const small = shares({ amount: 100n, instrument: ISIN, scale: 2 });
-const big = shares({ amount: 200n, instrument: ISIN, scale: 2 });
-const sameAsSmall = shares({ amount: 100n, instrument: ISIN, scale: 2 });
+const small = shares({ amount: 100n, scale: 2 });
+const big = shares({ amount: 200n, scale: 2 });
+const sameAsSmall = shares({ amount: 100n, scale: 2 });
 
 Deno.test("greaterThan", () => {
   assertEquals(greaterThan(big, small), true);

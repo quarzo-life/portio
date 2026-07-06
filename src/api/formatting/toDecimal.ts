@@ -13,7 +13,7 @@ import type { Shares } from "mod";
  * @example
  * import { shares, toDecimal } from "jsr:@quarzo-life/portio";
  *
- * const s = shares({ amount: 125000n, instrument: "LU1234567890", scale: 4 });
+ * const s = shares({ amount: 125000n, scale: 4 });
  *
  * toDecimal(s); // "12.5000"
  */

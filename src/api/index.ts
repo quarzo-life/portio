@@ -26,4 +26,3 @@ export * from "api/comparisons/greaterThanOrEqual.ts";
 export * from "api/comparisons/lessThan.ts";
 export * from "api/comparisons/lessThanOrEqual.ts";
 export * from "api/comparisons/haveSameAmount.ts";
-export * from "api/comparisons/haveSameInstrument.ts";

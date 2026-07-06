@@ -1,14 +1,8 @@
 import { assert } from "helpers/assert.ts";
-import {
-  INVALID_AMOUNT_MESSAGE,
-  INVALID_INSTRUMENT_MESSAGE,
-  INVALID_SCALE_MESSAGE,
-} from "messages";
-import type { InstrumentId } from "types/types.ts";
+import { INVALID_AMOUNT_MESSAGE, INVALID_SCALE_MESSAGE } from "messages";
 
 type SerializedShares = {
   amount: string;
-  instrument: InstrumentId;
   scale: number;
 };
 
@@ -17,15 +11,14 @@ type SerializedShares = {
  * (e.g. 12,5000 shares of a UCITS fund).
  *
  * Plain immutable data: an integer `amount` counted at `scale` decimal
- * places, plus the `instrument` (typically an ISIN) it is a quantity of.
+ * places. Which instrument these shares belong to is not tracked here — it
+ * is the caller's responsibility (e.g. keying a `Record<ISIN, Shares>`).
  * Build instances with {@link shares} or {@link zeroShares}; never mutate
  * fields directly.
  */
 export type Shares = Readonly<{
   /** Amount of shares expressed as an integer at `scale` decimal places */
   amount: bigint;
-  /** Identifier of the instrument these shares are units of (typically an ISIN) */
-  instrument: InstrumentId;
   /** Number of decimal places the fractional part of a share is tracked at */
   scale: number;
   /**
@@ -35,15 +28,6 @@ export type Shares = Readonly<{
    */
   toJSON: () => SerializedShares;
 }>;
-
-const resolveInstrument = (instrument: InstrumentId): InstrumentId => {
-  assert(
-    typeof instrument === "string" && instrument.trim().length > 0,
-    INVALID_INSTRUMENT_MESSAGE,
-  );
-
-  return instrument;
-};
 
 const resolveScale = (scale: number | undefined): number => {
   const resolved = scale ?? 0;
@@ -86,7 +70,6 @@ const resolveAmount = (amount: number | bigint | string): bigint => {
 };
 
 export type SharesOptions = {
-  instrument: InstrumentId;
   scale?: number;
   amount?: number | bigint | string;
 };
@@ -97,36 +80,25 @@ export type SharesOptions = {
  * @param amount The number of shares expressed as an integer at `scale`
  * decimal places. For example, 12.5 shares at scale 4 equals 125000.
  * Default `0n`.
- * @param instrument Identifier of the instrument (typically an ISIN).
  * @param scale Precision of the amount, i.e. how many decimal places a
- * fractional share is tracked at. Defaults to `0` (whole shares only) since,
- * unlike a currency's exponent, there is no fixed precision associated with
- * an instrument id.
+ * fractional share is tracked at. Defaults to `0` (whole shares only).
  *
  * @example
  * import { shares } from "jsr:@quarzo-life/portio";
  *
- * const s = shares({ amount: 125000n, instrument: "LU1234567890", scale: 4 }); // 12.5000 shares
+ * const s = shares({ amount: 125000n, scale: 4 }); // 12.5000 shares
  */
-export const shares = ({
-  amount = 0n,
-  instrument,
-  scale,
-}: SharesOptions): Shares => {
-  const resolvedInstrument = resolveInstrument(instrument);
-
+export const shares = ({ amount = 0n, scale }: SharesOptions): Shares => {
   const resolvedScale = resolveScale(scale);
 
   const resolvedAmount = resolveAmount(amount);
 
   return Object.freeze({
     amount: resolvedAmount,
-    instrument: resolvedInstrument,
     scale: resolvedScale,
     toJSON() {
       return {
         amount: `${resolvedAmount}n`,
-        instrument: resolvedInstrument,
         scale: resolvedScale,
       };
     },
@@ -134,10 +106,9 @@ export const shares = ({
 };
 
 /**
- * Create a Shares object with amount `0n` for the specified instrument.
+ * Create a Shares object with amount `0n`.
  *
  * @example
- * const zero = zeroShares("LU1234567890");
+ * const zero = zeroShares();
  */
-export const zeroShares = (instrument: InstrumentId): Shares =>
-  shares({ amount: 0n, instrument });
+export const zeroShares = (): Shares => shares({ amount: 0n });

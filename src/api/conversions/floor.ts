@@ -13,9 +13,9 @@ import { type Shares, shares } from "shares/index.ts";
  * @example
  * import { shares, floor, toDecimal } from "jsr:@quarzo-life/portio"
  *
- * toDecimal(floor(shares({ amount: 1250n, instrument: "LU1234567890", scale: 2 }))); // "12.00"
+ * toDecimal(floor(shares({ amount: 1250n, scale: 2 }))); // "12.00"
  */
-export const floor = ({ amount, scale, instrument }: Shares): Shares => {
+export const floor = ({ amount, scale }: Shares): Shares => {
   const factor = 10n ** BigInt(scale);
 
   const quotient = amount / factor;
@@ -25,7 +25,6 @@ export const floor = ({ amount, scale, instrument }: Shares): Shares => {
 
   return shares({
     amount: wholeUnits * factor,
-    instrument,
     scale,
   });
 };

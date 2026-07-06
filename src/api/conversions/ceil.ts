@@ -12,9 +12,9 @@ import { type Shares, shares } from "shares/index.ts";
  * @example
  * import { shares, ceil, toDecimal } from "jsr:@quarzo-life/portio"
  *
- * toDecimal(ceil(shares({ amount: 1250n, instrument: "LU1234567890", scale: 2 }))); // "13.00"
+ * toDecimal(ceil(shares({ amount: 1250n, scale: 2 }))); // "13.00"
  */
-export const ceil = ({ amount, scale, instrument }: Shares): Shares => {
+export const ceil = ({ amount, scale }: Shares): Shares => {
   const factor = 10n ** BigInt(scale);
 
   const quotient = amount / factor;
@@ -24,7 +24,6 @@ export const ceil = ({ amount, scale, instrument }: Shares): Shares => {
 
   return shares({
     amount: wholeUnits * factor,
-    instrument,
     scale,
   });
 };

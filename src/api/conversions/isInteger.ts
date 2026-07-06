@@ -9,8 +9,8 @@ import type { Shares } from "shares/index.ts";
  * @example
  * import { shares, isInteger } from "jsr:@quarzo-life/portio"
  *
- * isInteger(shares({ amount: 1200n, instrument: "LU1234567890", scale: 2 })); // true
- * isInteger(shares({ amount: 1250n, instrument: "LU1234567890", scale: 2 })); // false
+ * isInteger(shares({ amount: 1200n, scale: 2 })); // true
+ * isInteger(shares({ amount: 1250n, scale: 2 })); // false
  */
 export const isInteger = ({ amount, scale }: Shares): boolean =>
   amount % 10n ** BigInt(scale) === 0n;

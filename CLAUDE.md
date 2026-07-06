@@ -53,36 +53,35 @@ Adding a new top-level folder under `src/` requires registering it in
 
 ### Core data model (`src/shares/index.ts`, `src/types/types.ts`)
 
-A `Shares` is a frozen object
-`{ amount: bigint, instrument: InstrumentId, scale: number, toJSON }`. The
-`shares({ amount, instrument, scale? })` factory is the only sanctioned way to
-build one — never construct a `Shares` literal directly, since `shares()`
-validates inputs (safe-integer / regex checks on `string`/`number` amounts,
-non-negative integer scale) and freezes the result.
+A `Shares` is a frozen object `{ amount: bigint, scale: number, toJSON }`. The
+`shares({ amount?, scale? })` factory is the only sanctioned way to build one —
+never construct a `Shares` literal directly, since `shares()` validates inputs
+(safe-integer / regex checks on `string`/`number` amounts, non-negative integer
+scale) and freezes the result.
 
 - `amount` is always the integer count of shares at `scale` decimal places.
 - `scale` defaults to `0` (whole shares only). Unlike moneta's `Currency`, there
-  is no fixed registry an instrument id resolves against, so there is no
-  per-instrument default exponent to fall back to — callers must be explicit
-  about precision.
-- `instrument` (`InstrumentId`) is a free-form identifier, typically an ISIN. It
-  is treated as an opaque string — no `CURRENCIES`-style dict, no base/exponent
-  metadata attached to it. `haveSameInstrument` does strict equality.
+  is no fixed registry to resolve a default exponent against — callers must be
+  explicit about precision.
+- **`Shares` has no concept of instrument identity.** Unlike the earlier design,
+  there is no `InstrumentId` field and no `haveSameInstrument` guard — tracking
+  which instrument (e.g. ISIN) a position belongs to is entirely the caller's
+  responsibility (e.g. keying a `Record<ISIN, Shares>`). Do not reintroduce an
+  instrument field without an explicit request.
 
 ### Public API surface (`src/api/`)
 
 Functions are pure and grouped by intent — `mutations/` (add, subtract,
 multiply), `conversions/` (normalizeScale, isInteger, floor, ceil),
 `formatting/` (toDecimal, toSnapshot), `comparisons/` (equal, compareAmounts,
-greaterThan…, haveSameInstrument, haveSameAmount). Everything is re-exported
-through `src/api/index.ts` and then `mod.ts`.
+greaterThan…, haveSameAmount). Everything is re-exported through
+`src/api/index.ts` and then `mod.ts`.
 
 Cross-cutting patterns to preserve when adding API (mirrors moneta):
 
-- **Binary ops normalize scale first.** See `add.ts`: it asserts
-  `haveSameInstrument`, calls `normalizeScale([a, b])`, then operates on the
-  aligned amounts. New ops between two `Shares` values should follow the same
-  shape.
+- **Binary ops normalize scale first.** See `add.ts`: it calls
+  `normalizeScale([a, b])`, then operates on the aligned amounts. New ops
+  between two `Shares` values should follow the same shape.
 - **Assertions go through `helpers/assert.ts` with a string from
   `src/messages.ts`.** Don't `throw new Error(...)` ad hoc inside the API; add a
   message constant if a new error category is needed.
@@ -99,11 +98,10 @@ Cross-cutting patterns to preserve when adding API (mirrors moneta):
 
 ### Not implemented yet (compared to moneta)
 
-No NAV/valuation type, no `allocate`, no `dangerDivide`/`dangerRound`, no fixed
-instrument registry, no docs site, no benchmarks. Add a NAV/valuation concept
-only once the portfolio use case needs to price a position in money — that would
-pull in `@quarzo-life/moneta` as a dependency rather than reimplementing `Money`
-here.
+No NAV/valuation type, no `allocate`, no `dangerDivide`/`dangerRound`, no docs
+site, no benchmarks. Add a NAV/valuation concept only once the portfolio use
+case needs to price a position in money — that would pull in
+`@quarzo-life/moneta` as a dependency rather than reimplementing `Money` here.
 
 ## Tests
 

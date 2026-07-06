@@ -1,4 +1,4 @@
-import type { InstrumentId, Shares } from "mod";
+import type { Shares } from "mod";
 
 /**
  * JSON snapshot of a Shares object.
@@ -13,12 +13,10 @@ import type { InstrumentId, Shares } from "mod";
  */
 export const toSnapshot = (sharesObject: Shares): {
   amount: bigint;
-  instrument: InstrumentId;
   scale: number;
 } => {
   return {
     amount: sharesObject.amount,
-    instrument: sharesObject.instrument,
     scale: sharesObject.scale,
   };
 };

@@ -20,26 +20,25 @@ import { getAmountAndScale } from "utils/index.ts";
  * @example // Multiply by an integer (e.g. a 4-for-1 stock split)
  * import { shares, multiply } from "jsr:@quarzo-life/portio"
  *
- * const s = shares({ amount: 400n, instrument: "LU1234567890" });
+ * const s = shares({ amount: 400n });
  *
  * multiply(s, 4); // a Shares object with amount 1600
  *
  * @example // Multiply by a scaled multiplier
  * import { shares, multiply } from "jsr:@quarzo-life/portio"
  *
- * const s = shares({ amount: 401n, instrument: "LU1234567890" });
+ * const s = shares({ amount: 401n });
  *
  * multiply(s, { amount: 2001n, scale: 3 }); // a Shares object with amount 802401 and scale 3
  */
 export const multiply = (multiplicand: Shares, multiplier: Rate): Shares => {
-  const { amount, instrument, scale } = multiplicand;
+  const { amount, scale } = multiplicand;
 
   const { amount: multiplierAmount, scale: multiplierScale } =
     getAmountAndScale(multiplier);
 
   return shares({
     amount: amount * multiplierAmount,
-    instrument,
     scale: scale + multiplierScale,
   });
 };

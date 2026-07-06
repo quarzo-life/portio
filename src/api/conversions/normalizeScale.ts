@@ -13,8 +13,8 @@ import { type Shares, shares } from "shares/index.ts";
  *
  * import { shares, normalizeScale } from "jsr:@quarzo-life/portio"
  *
- * const s1 = shares({ amount: 100n, instrument: "LU1234567890", scale: 2 });
- * const s2 = shares({ amount: 2000n, instrument: "LU1234567890", scale: 3 });
+ * const s1 = shares({ amount: 100n, scale: 2 });
+ * const s2 = shares({ amount: 2000n, scale: 3 });
  *
  * const [one, two] = normalizeScale([s1, s2]);
  *
@@ -38,7 +38,6 @@ export const normalizeScale = (
 
     return shares({
       amount: s.amount * factor,
-      instrument: s.instrument,
       scale: highestScale,
     });
   });

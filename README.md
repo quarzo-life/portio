@@ -48,8 +48,8 @@ All amounts are in `bigint`.
 ```ts
 import { add, shares } from "jsr:@quarzo-life/portio";
 
-const s1 = shares({ amount: 300n, instrument: "LU1234567890", scale: 2 });
-const s2 = shares({ amount: 200n, instrument: "LU1234567890", scale: 2 });
+const s1 = shares({ amount: 300n, scale: 2 });
+const s2 = shares({ amount: 200n, scale: 2 });
 
 add(s1, s2); // a Shares object with amount 500
 ```
@@ -62,9 +62,12 @@ expresses a `Shares` position as an integer `amount` at a given decimal `scale`,
 and every operation (add, subtract, multiply, floor, ceil, compare) works on
 that integer, never on a float.
 
-Unlike a currency, an instrument identifier (typically an ISIN) doesn't imply a
-fixed decimal precision, so `scale` defaults to `0` (whole shares) and must be
-set explicitly wherever fractional dealing applies.
+A `Shares` object doesn't track which instrument it belongs to — unlike a
+currency, an instrument identifier (typically an ISIN) doesn't imply a fixed
+decimal precision anyway, so `scale` defaults to `0` (whole shares) and must be
+set explicitly wherever fractional dealing applies. Keeping track of which
+instrument a position belongs to (e.g. keying a `Record<ISIN, Shares>`) is the
+caller's responsibility.
 
 ## Scope
 
