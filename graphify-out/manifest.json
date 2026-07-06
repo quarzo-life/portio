@@ -1,0 +1,242 @@
+{
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/example.ts": {
+    "mtime": 1783357851.9079487,
+    "ast_hash": "bda73a707539bd2c79d044f61799973e",
+    "semantic_hash": "bda73a707539bd2c79d044f61799973e"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/mod.ts": {
+    "mtime": 1783356084.3133607,
+    "ast_hash": "c561d628be831fcaafc64e8eef09e4eb",
+    "semantic_hash": "c561d628be831fcaafc64e8eef09e4eb"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/__test__/compareAmounts.test.ts": {
+    "mtime": 1783357878.6596518,
+    "ast_hash": "2b1476eb0e541d16033f7db87ac6bf29",
+    "semantic_hash": "2b1476eb0e541d16033f7db87ac6bf29"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/__test__/equal.test.ts": {
+    "mtime": 1783357880.4984472,
+    "ast_hash": "8d14ed4176aef19927d25173101b99bc",
+    "semantic_hash": "8d14ed4176aef19927d25173101b99bc"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/__test__/haveSameAmount.test.ts": {
+    "mtime": 1783357883.0728471,
+    "ast_hash": "fe6d559c0b1999f3d1cb684492a0a2e3",
+    "semantic_hash": "fe6d559c0b1999f3d1cb684492a0a2e3"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/__test__/ordering.test.ts": {
+    "mtime": 1783357886.6565235,
+    "ast_hash": "1aac0913f23e7c7da871b89f4d6ade16",
+    "semantic_hash": "1aac0913f23e7c7da871b89f4d6ade16"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/compareAmounts.ts": {
+    "mtime": 1783357840.690026,
+    "ast_hash": "ab54f38af844fa26e54881b3c842c703",
+    "semantic_hash": "ab54f38af844fa26e54881b3c842c703"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/equal.ts": {
+    "mtime": 1783357840.7614837,
+    "ast_hash": "1a1cd1c510fcfe0ca535b4199de9569d",
+    "semantic_hash": "1a1cd1c510fcfe0ca535b4199de9569d"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/greaterThan.ts": {
+    "mtime": 1783356022.09295,
+    "ast_hash": "341c1c1f1dd0ffbd5131d5642a91287c",
+    "semantic_hash": "341c1c1f1dd0ffbd5131d5642a91287c"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/greaterThanOrEqual.ts": {
+    "mtime": 1783356022.5462298,
+    "ast_hash": "2cd8dcbc04464e9eaa01116526a3e3c7",
+    "semantic_hash": "2cd8dcbc04464e9eaa01116526a3e3c7"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/haveSameAmount.ts": {
+    "mtime": 1783356014.9271686,
+    "ast_hash": "4d00250f66fabc1471fc9f2e2a9d17c4",
+    "semantic_hash": "4d00250f66fabc1471fc9f2e2a9d17c4"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/lessThan.ts": {
+    "mtime": 1783356025.107054,
+    "ast_hash": "6c50be1c89aae5059d572aefe5d5b7da",
+    "semantic_hash": "6c50be1c89aae5059d572aefe5d5b7da"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/comparisons/lessThanOrEqual.ts": {
+    "mtime": 1783356025.589208,
+    "ast_hash": "e8aaac6bd69db1aa8f255bb005831876",
+    "semantic_hash": "e8aaac6bd69db1aa8f255bb005831876"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/conversions/__test__/ceil.test.ts": {
+    "mtime": 1783357872.4287157,
+    "ast_hash": "53d484afab768316b604b93b5ff730ed",
+    "semantic_hash": "53d484afab768316b604b93b5ff730ed"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/conversions/__test__/floor.test.ts": {
+    "mtime": 1783357869.943301,
+    "ast_hash": "d5d7a7fabbd82591fdd8c0070658aead",
+    "semantic_hash": "d5d7a7fabbd82591fdd8c0070658aead"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/conversions/__test__/isInteger.test.ts": {
+    "mtime": 1783357875.347782,
+    "ast_hash": "7a267894792c3fcac5c76ecfa23489c6",
+    "semantic_hash": "7a267894792c3fcac5c76ecfa23489c6"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/conversions/__test__/normalizeScale.test.ts": {
+    "mtime": 1783357867.387946,
+    "ast_hash": "8a24f8d657066d799c0aa8f9475443bf",
+    "semantic_hash": "8a24f8d657066d799c0aa8f9475443bf"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/conversions/ceil.ts": {
+    "mtime": 1783357830.0113995,
+    "ast_hash": "79d57673b5422ba6b9876942248c1aaf",
+    "semantic_hash": "79d57673b5422ba6b9876942248c1aaf"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/conversions/floor.ts": {
+    "mtime": 1783357827.1519258,
+    "ast_hash": "d14da038376e9a6d5728f98f1b3d1cfb",
+    "semantic_hash": "d14da038376e9a6d5728f98f1b3d1cfb"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/conversions/isInteger.ts": {
+    "mtime": 1783357823.8910391,
+    "ast_hash": "cca481475294a32429014384e7ab3dbb",
+    "semantic_hash": "cca481475294a32429014384e7ab3dbb"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/conversions/normalizeScale.ts": {
+    "mtime": 1783357840.313922,
+    "ast_hash": "303350eaccf981bd23afb6459bdca812",
+    "semantic_hash": "303350eaccf981bd23afb6459bdca812"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/formatting/__test__/toDecimal.test.ts": {
+    "mtime": 1783357889.40079,
+    "ast_hash": "f5c4729f5c064896f510564f62611645",
+    "semantic_hash": "f5c4729f5c064896f510564f62611645"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/formatting/__test__/toSnapshot.test.ts": {
+    "mtime": 1783357907.9139545,
+    "ast_hash": "ec6ca66f321c337d35a4b47fcafe5136",
+    "semantic_hash": "ec6ca66f321c337d35a4b47fcafe5136"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/formatting/toDecimal.ts": {
+    "mtime": 1783357840.9011326,
+    "ast_hash": "58c3286eac5936f6b4976d87aa79c434",
+    "semantic_hash": "58c3286eac5936f6b4976d87aa79c434"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/formatting/toSnapshot.ts": {
+    "mtime": 1783357840.8481488,
+    "ast_hash": "eb37fe7c8c3ea08fc8c569a6f3ad859d",
+    "semantic_hash": "eb37fe7c8c3ea08fc8c569a6f3ad859d"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/index.ts": {
+    "mtime": 1783357841.271704,
+    "ast_hash": "f308d0e9c5d349863ec0fd07a784d5f4",
+    "semantic_hash": "f308d0e9c5d349863ec0fd07a784d5f4"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/mutations/__test__/add.test.ts": {
+    "mtime": 1783357859.4329245,
+    "ast_hash": "0cf4c53cfa962096bdea7ecff4435cd8",
+    "semantic_hash": "0cf4c53cfa962096bdea7ecff4435cd8"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/mutations/__test__/multiply.test.ts": {
+    "mtime": 1783357864.9337673,
+    "ast_hash": "b12d7fe83d9541881ed1bc4e4e1df8dc",
+    "semantic_hash": "b12d7fe83d9541881ed1bc4e4e1df8dc"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/mutations/__test__/subtract.test.ts": {
+    "mtime": 1783357862.259032,
+    "ast_hash": "c2fe7fe361ac43fc1720f3f4a6f7d77a",
+    "semantic_hash": "c2fe7fe361ac43fc1720f3f4a6f7d77a"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/mutations/add.ts": {
+    "mtime": 1783357814.3439014,
+    "ast_hash": "59569f75e65e401f6069d59f67bf2990",
+    "semantic_hash": "59569f75e65e401f6069d59f67bf2990"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/mutations/multiply.ts": {
+    "mtime": 1783357823.0355053,
+    "ast_hash": "5631d28e8a2c8576cf00608f0613bc09",
+    "semantic_hash": "5631d28e8a2c8576cf00608f0613bc09"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/api/mutations/subtract.ts": {
+    "mtime": 1783357817.271941,
+    "ast_hash": "1d477973afa838cc258b3c6156c4e226",
+    "semantic_hash": "1d477973afa838cc258b3c6156c4e226"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/helpers/JSONbigint.ts": {
+    "mtime": 1783355927.3787982,
+    "ast_hash": "a4530504ef5919919147d14fbdd23d3e",
+    "semantic_hash": "a4530504ef5919919147d14fbdd23d3e"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/helpers/assert.ts": {
+    "mtime": 1783355927.3516872,
+    "ast_hash": "60fa7d850af2c31f6869877233dd2fde",
+    "semantic_hash": "60fa7d850af2c31f6869877233dd2fde"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/helpers/index.ts": {
+    "mtime": 1783355927.3980255,
+    "ast_hash": "a694b1ce1e5b3f0679cc2f72cfcbd4a4",
+    "semantic_hash": "a694b1ce1e5b3f0679cc2f72cfcbd4a4"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/messages.ts": {
+    "mtime": 1783357793.8556666,
+    "ast_hash": "762769dcbef33810cbec0f4594938d24",
+    "semantic_hash": "762769dcbef33810cbec0f4594938d24"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/shares/index.ts": {
+    "mtime": 1783357802.4685433,
+    "ast_hash": "8465008e678a8298d60a036bdad122ad",
+    "semantic_hash": "8465008e678a8298d60a036bdad122ad"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/shares/index_test.ts": {
+    "mtime": 1783357812.4698672,
+    "ast_hash": "5640acd9036e07b9e469a431a7c95717",
+    "semantic_hash": "5640acd9036e07b9e469a431a7c95717"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/types/types.ts": {
+    "mtime": 1783357793.3179789,
+    "ast_hash": "a3c43890a08ec03628c60dab5fe1a5a4",
+    "semantic_hash": "a3c43890a08ec03628c60dab5fe1a5a4"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/utils/getAmountAndScale.ts": {
+    "mtime": 1783355956.5258534,
+    "ast_hash": "d78a1ca56c91a035817b7d260c032fe0",
+    "semantic_hash": "d78a1ca56c91a035817b7d260c032fe0"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/utils/index.ts": {
+    "mtime": 1783355957.0706742,
+    "ast_hash": "f7148e67467e1822db7e62af04523fc4",
+    "semantic_hash": "f7148e67467e1822db7e62af04523fc4"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/src/utils/isScaledAmount.ts": {
+    "mtime": 1783355954.6529577,
+    "ast_hash": "6fdba691e8035617a5db93aabce31c0f",
+    "semantic_hash": "6fdba691e8035617a5db93aabce31c0f"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/.github/workflows/ci.yml": {
+    "mtime": 1783355927.2592006,
+    "ast_hash": "6d05394523b29801a37d09cecd323374",
+    "semantic_hash": "6d05394523b29801a37d09cecd323374"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/.github/workflows/publish.yml": {
+    "mtime": 1783356635.2727628,
+    "ast_hash": "8c03ef39c392982c7e460a1f1c89ef24",
+    "semantic_hash": "8c03ef39c392982c7e460a1f1c89ef24"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/.serena/project.local.yml": {
+    "mtime": 1783355058.7443495,
+    "ast_hash": "f136e7d47205d9a758913615074760e5",
+    "semantic_hash": "f136e7d47205d9a758913615074760e5"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/.serena/project.yml": {
+    "mtime": 1783355058.7433872,
+    "ast_hash": "c8fbddd196b114e470d1c24804584475",
+    "semantic_hash": "c8fbddd196b114e470d1c24804584475"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/CLAUDE.md": {
+    "mtime": 1783357933.1704998,
+    "ast_hash": "cc2c7c2d677950e7e89fd0f80a85dffe",
+    "semantic_hash": "cc2c7c2d677950e7e89fd0f80a85dffe"
+  },
+  "/Users/ferreol.robert/Sites/quarzo-life/portio/README.md": {
+    "mtime": 1783358477.7310007,
+    "ast_hash": "b4144a90f8c411d47b78d30d66a5f613",
+    "semantic_hash": "b4144a90f8c411d47b78d30d66a5f613"
+  }
+}
