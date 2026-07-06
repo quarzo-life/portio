@@ -69,6 +69,43 @@ set explicitly wherever fractional dealing applies. Keeping track of which
 instrument a position belongs to (e.g. keying a `Record<ISIN, Shares>`) is the
 caller's responsibility.
 
+## Tracking an instrument
+
+Since `Shares` has no instrument concept, pair it with your own identifier —
+typically branded/nominally-typed so it can't be mixed up with a plain `string`
+— in whatever shape fits your domain:
+
+```ts
+import { type Shares, shares } from "jsr:@quarzo-life/portio";
+
+type InstrumentId = string & { readonly __brand: "InstrumentId" };
+
+const InstrumentId = (id: string): InstrumentId => id as InstrumentId;
+
+type Position = {
+  instrumentId: InstrumentId; // vrai ID avec typage nominal
+  shares: Shares;
+};
+
+const position: Position = {
+  instrumentId: InstrumentId("LU1234567890"),
+  shares: shares({ amount: 125000n, scale: 4 }), // 12.5000 shares
+};
+```
+
+Or key a lookup by instrument if you're tracking several positions at once:
+
+```ts
+const positions: Record<InstrumentId, Shares> = {
+  [InstrumentId("LU1234567890")]: shares({ amount: 125000n, scale: 4 }),
+  [InstrumentId("FR0000000000")]: shares({ amount: 300n }),
+};
+```
+
+Guarding against mixing instruments (e.g. before calling `add`) is then a plain
+equality check on `instrumentId`, done by the caller — Portio's operations only
+ever look at `amount`/`scale`.
+
 ## Scope
 
 This first version covers the core `Shares` primitive: creation, arithmetic
