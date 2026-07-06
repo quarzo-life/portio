@@ -17,12 +17,15 @@ import { type Shares, shares } from "shares/index.ts";
  */
 export const floor = ({ amount, scale, instrument }: Shares): Shares => {
   const factor = 10n ** BigInt(scale);
+
+  const quotient = amount / factor;
   const remainder = amount % factor;
-  const isWhole = remainder === 0n;
 
-  const wholeUnits = isWhole || amount > 0n
-    ? amount / factor
-    : amount / factor - 1n;
+  const wholeUnits = remainder === 0n || amount > 0n ? quotient : quotient - 1n;
 
-  return shares({ amount: wholeUnits * factor, instrument, scale });
+  return shares({
+    amount: wholeUnits * factor,
+    instrument,
+    scale,
+  });
 };

@@ -1,6 +1,6 @@
 {
   "name": "@quarzo-life/portio",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "exports": "./mod.ts",
   "lock": true,
@@ -12,15 +12,15 @@
     "utils/": "./src/utils/",
     "shares/": "./src/shares/",
     "types/": "./src/types/",
-    "helpers/": "./src/helpers/"
+    "helpers/": "./src/helpers/",
   },
   "tasks": {
     "start": "deno run example.ts",
-    "test": "deno test --parallel"
+    "test": "deno test --parallel",
   },
   "lint": {
     "rules": {
-      "tags": ["recommended"]
-    }
-  }
+      "tags": ["recommended"],
+    },
+  },
 }
