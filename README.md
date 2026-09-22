@@ -1,4 +1,8 @@
 <p align="center">
+  <img src="assets/logo.svg" alt="Portio logo" width="96" height="96">
+</p>
+
+<p align="center">
   <h1>Portio</h1>
 </p>
 

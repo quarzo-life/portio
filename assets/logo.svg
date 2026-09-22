@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-label="Portio logo">
+  <circle
+    cx="48" cy="48" r="34"
+    fill="none"
+    stroke="#94a3b8"
+    stroke-width="6"
+  />
+  <path
+    d="M 52.33 45.5 L 61.13 12.66 A 34 34 0 0 1 85.17 54.30 Z"
+    fill="#4f46e5"
+    stroke-linejoin="round"
+  />
+</svg>
