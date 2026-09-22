@@ -3,6 +3,13 @@
 </p>
 
 <p align="center">
+  <a href="https://jsr.io/@quarzo-life/portio"><img src="https://jsr.io/badges/@quarzo-life/portio" alt="JSR version"></a>
+  <a href="https://jsr.io/@quarzo-life/portio"><img src="https://jsr.io/badges/@quarzo-life/portio/score" alt="JSR score"></a>
+  <a href="https://github.com/quarzo-life/portio/actions/workflows/publish.yml"><img src="https://github.com/quarzo-life/portio/actions/workflows/publish.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+</p>
+
+<p align="center">
   <strong>Track and calculate fund share positions safely in JavaScript and TypeScript.</strong>
 </p>
 

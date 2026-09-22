@@ -105,9 +105,9 @@ Cross-cutting patterns to preserve when adding API:
 - **Every exported symbol carries JSDoc with `@example`.** Description first
   (behavioral notes: scale alignment, sign behavior, curried usage, throw
   conditions), then `@param`/`@returns`, then fenced ```ts examples importing
-from `@quarzo-life/portio`, with a trailing comment translating the result
-into a human-readable share count (`// 5.5 shares`). Take example values from
-the tests so they are demonstrably correct. `deno doc --lint mod.ts` enforces
+  from `@quarzo-life/portio`, with a trailing comment translating the result
+  into a human-readable share count (`// 5.5 shares`). Take example values from
+  the tests so they are demonstrably correct. `deno doc --lint mod.ts` enforces
   coverage.
 
 ## Tests
