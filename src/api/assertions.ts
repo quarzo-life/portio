@@ -1,3 +1,4 @@
+import { MAX_SCALE } from "./constants.ts";
 import { Shares } from "./types.ts";
 
 // Internal guards, not part of the public API. Every public function
@@ -22,11 +23,14 @@ export const safeInteger = (value: number, label: string): number => {
   return value === 0 ? 0 : value;
 };
 
-/** Checks that `scale` is a non-negative safe integer. */
+/**
+ * Checks that `scale` is an integer between `0` and `MAX_SCALE`, so that
+ * `10 ** scale` is always an exact safe integer.
+ */
 export const assertScale = (scale: number, label: string = "scale"): void => {
-  if (!Number.isSafeInteger(scale) || scale < 0) {
+  if (!Number.isInteger(scale) || scale < 0 || scale > MAX_SCALE) {
     throw new RangeError(
-      `${label} must be a non-negative safe integer, but found ${scale}`,
+      `${label} must be an integer between 0 and ${MAX_SCALE}, but found ${scale}`,
     );
   }
 };

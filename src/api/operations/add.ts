@@ -14,7 +14,7 @@ import { Shares } from "../types.ts";
  * @param second - The second position.
  * @returns A new `Shares` at `max(first.scale, second.scale)`.
  * @throws {RangeError} If an operand is not a valid position (safe-integer
- * quantity, non-negative integer scale), or if an aligned quantity or the
+ * quantity, scale between `0` and `MAX_SCALE`), or if an aligned quantity or the
  * sum leaves the safe-integer range.
  *
  * @example Adding positions of different scales

@@ -9,13 +9,12 @@ import { Shares } from "../types.ts";
  * scale `0` is formatted without a decimal point.
  *
  * The text is built from the integer digits of the quantity — nothing is
- * divided — so the output is exact and never uses exponent notation,
- * whatever the scale.
+ * divided — so the output is exact and never uses exponent notation.
  *
  * @param shares - The position to format.
  * @returns The decimal representation, with `scale` fractional digits.
  * @throws {RangeError} If the quantity is not a safe integer or the scale is
- * not a non-negative integer.
+ * not an integer between `0` and `MAX_SCALE`.
  *
  * @example Formatting positions at various scales
  * ```ts

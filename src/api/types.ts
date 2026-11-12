@@ -6,8 +6,8 @@
  * quantity as an integer avoids floating-point rounding errors when adding,
  * subtracting or comparing positions.
  *
- * `quantity` must be a safe integer (`Number.isSafeInteger`) and `scale` a
- * non-negative integer. Every function of the library checks this on its
+ * `quantity` must be a safe integer (`Number.isSafeInteger`) and `scale` an
+ * integer between `0` and `MAX_SCALE` (15). Every function of the library checks this on its
  * inputs and on its result, and throws a `RangeError` rather than returning
  * an inexact value.
  *

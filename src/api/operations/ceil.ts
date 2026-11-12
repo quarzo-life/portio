@@ -16,7 +16,7 @@ import { Shares } from "../types.ts";
  * already `ceilScale` or less is returned unchanged.
  * @returns A new `Shares` at the same scale, rounded up.
  * @throws {RangeError} If the position is not valid (safe-integer quantity,
- * non-negative integer scale), if `ceilScale` is not an integer, or if the
+ * scale between `0` and `MAX_SCALE`), if `ceilScale` is not an integer, or if the
  * rounded quantity leaves the safe-integer range.
  *
  * @example Rounding up to whole shares (default)

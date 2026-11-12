@@ -13,19 +13,19 @@ import { Shares } from "../types.ts";
  * `halfUp` by default (nearest integer, ties toward positive infinity — so
  * -1.4 becomes -1 and -1.5 becomes -1).
  *
- * The result is exact or the call throws: a conversion whose quantity, or
- * whose power-of-ten factor, leaves the safe-integer range is rejected
- * instead of returning an approximation. A zero position converts to any
- * scale.
+ * The result is exact or the call throws: a conversion whose quantity
+ * leaves the safe-integer range is rejected instead of returning an
+ * approximation.
  *
  * @typeParam TargetScale - The target scale, trackable at the type level.
  * @param target - The scale to convert to.
  * @param divide - The rounding strategy used when the scale decreases.
  * Defaults to `halfUp`.
  * @returns A function converting a `Shares` to `Shares<TargetScale>`.
- * @throws {RangeError} If `target` or the position's scale is not a
- * non-negative integer, if the position's quantity is not a safe integer, or
- * if the converted quantity cannot be represented as a safe integer.
+ * @throws {RangeError} If `target` or the position's scale is not an integer
+ * between `0` and `MAX_SCALE`, if the position's quantity is not a safe
+ * integer, or if the converted quantity cannot be represented as a safe
+ * integer.
  *
  * @example Increasing precision (lossless)
  * ```ts
@@ -67,11 +67,7 @@ export const toScale = <TargetScale extends number = number>(
     assertShares(shares);
     const { quantity, scale } = shares;
 
-    if (target === scale || quantity === 0) {
-      return { quantity: safeInteger(quantity, "quantity"), scale: target };
-    }
-
-    if (target > scale) {
+    if (target >= scale) {
       return {
         quantity: safeInteger(
           quantity * 10 ** (target - scale),
@@ -81,18 +77,9 @@ export const toScale = <TargetScale extends number = number>(
       };
     }
 
-    const factor = 10 ** (scale - target);
-
-    if (!Number.isSafeInteger(factor)) {
-      throw new RangeError(
-        `cannot convert from scale ${scale} to scale ${target}: ` +
-          `the factor 10 ** ${scale - target} is not a safe integer`,
-      );
-    }
-
     return {
       quantity: safeInteger(
-        divide(quantity, factor),
+        divide(quantity, 10 ** (scale - target)),
         `quantity at scale ${target}`,
       ),
       scale: target,

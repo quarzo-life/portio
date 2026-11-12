@@ -8,6 +8,7 @@ import {
   isGreaterThan,
   isInteger,
   isLowerThan,
+  MAX_SCALE,
   multiply,
   subtract,
   toDecimal,
@@ -23,10 +24,10 @@ describe("exactness (QL-1575 audit table)", () => {
     expect(toDecimal({ quantity: 1, scale: 7 })).toBe("0.0000001");
   });
 
-  test("#2 toDecimal keeps the value at a very large scale", () => {
-    expect(toDecimal({ quantity: 1, scale: 400 })).toBe(
-      `0.${"0".repeat(399)}1`,
-    );
+  // The ticket first asked for the exact text here; the decision is now that
+  // a scale above MAX_SCALE (15) is rejected, so the value is never lost.
+  test("#2 toDecimal throws on a scale above MAX_SCALE", () => {
+    expect(() => toDecimal({ quantity: 1, scale: 400 })).toThrow(Error);
   });
 
   test("#3 toScale rounds -1.4 to -1 (nearest integer)", () => {
@@ -129,10 +130,6 @@ describe("safe-integer guard on results", () => {
     );
   });
 
-  test("toScale throws when the downscale factor is not a safe integer", () => {
-    expect(() => toScale(0)({ quantity: 1, scale: 400 })).toThrow(RangeError);
-  });
-
   test("results at the limit of the safe range are exact", () => {
     expect(add({ quantity: MAX - 1, scale: 0 }, { quantity: 1, scale: 0 }))
       .toEqual({ quantity: MAX, scale: 0 });
@@ -159,15 +156,49 @@ describe("zero", () => {
     expect(Object.is(toScale(0)({ quantity: -4, scale: 1 }).quantity, 0))
       .toBe(true);
   });
+});
 
-  test("a zero position converts to any scale", () => {
-    expect(toScale(0)({ quantity: 0, scale: 400 })).toEqual({
+describe("scale limit (MAX_SCALE)", () => {
+  const tooPrecise = { quantity: 1, scale: MAX_SCALE + 1 };
+  const ok = { quantity: 1, scale: 0 };
+
+  test("MAX_SCALE is 15, the largest power of ten that is a safe integer", () => {
+    expect(MAX_SCALE).toBe(15);
+    expect(Number.isSafeInteger(10 ** MAX_SCALE)).toBe(true);
+    expect(Number.isSafeInteger(10 ** (MAX_SCALE + 1))).toBe(false);
+  });
+
+  test("accepts a position at MAX_SCALE", () => {
+    const smallest = { quantity: 1, scale: MAX_SCALE };
+    expect(toDecimal(smallest)).toBe("0.000000000000001");
+    expect(isInteger(smallest)).toBe(false);
+    expect(toScale(MAX_SCALE)({ quantity: 9, scale: 0 })).toEqual({
+      quantity: 9_000_000_000_000_000,
+      scale: MAX_SCALE,
+    });
+    expect(toScale(0)({ quantity: 1, scale: MAX_SCALE })).toEqual({
       quantity: 0,
       scale: 0,
     });
-    expect(toScale(400)({ quantity: 0, scale: 0 })).toEqual({
-      quantity: 0,
-      scale: 400,
+    expect(add(smallest, ok)).toEqual({
+      quantity: 1_000_000_000_000_001,
+      scale: MAX_SCALE,
     });
+  });
+
+  test.each([
+    ["add", () => add(tooPrecise, ok)],
+    ["subtract", () => subtract(ok, tooPrecise)],
+    ["multiply", () => multiply(1)(tooPrecise)],
+    ["floor", () => floor(tooPrecise)],
+    ["ceil", () => ceil(tooPrecise)],
+    ["toScale (position)", () => toScale(0)(tooPrecise)],
+    ["toScale (target)", () => toScale(MAX_SCALE + 1)],
+    ["toDecimal", () => toDecimal(tooPrecise)],
+    ["isInteger", () => isInteger(tooPrecise)],
+    ["equal", () => equal(tooPrecise, tooPrecise)],
+    ["zero quantity", () => toDecimal({ quantity: 0, scale: MAX_SCALE + 1 })],
+  ])("%s throws a RangeError above MAX_SCALE", (_name, call) => {
+    expect(call).toThrow(RangeError);
   });
 });

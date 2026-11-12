@@ -87,8 +87,12 @@ Everything is re-exported through per-folder `index.ts` barrels, then
 Cross-cutting patterns to preserve when adding API:
 
 - **Exact, or throw.** `quantity` is a `number`, exact only in the safe-integer
-  range. Every public function validates its inputs (`assertShares`) and wraps
-  its result in `safeInteger(...)` from `src/api/assertions.ts` (internal, not
+  range, and `scale` is capped at `MAX_SCALE` (15, exported from
+  `src/api/constants.ts`) so `10 ** scale` is always an exact safe integer.
+  Cryptocurrency units (e.g. 18 decimals for ether) are therefore out of scope:
+  supporting them needs a `bigint` quantity, i.e. a change of the `Shares` type.
+  Every public function validates its inputs (`assertShares`) and wraps its
+  result in `safeInteger(...)` from `src/api/assertions.ts` (internal, not
   exported), throwing a `RangeError` rather than returning an inexact or
   non-integer quantity. Never divide floats to get a quantity: use `%` (exact)
   and integer steps, as `halfUp`, `floor`, `ceil` and `toDecimal` do. A new

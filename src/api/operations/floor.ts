@@ -16,7 +16,7 @@ import { Shares } from "../types.ts";
  * already `floorScale` or less is returned unchanged.
  * @returns A new `Shares` at the same scale, rounded down.
  * @throws {RangeError} If the position is not valid (safe-integer quantity,
- * non-negative integer scale), if `floorScale` is not an integer, or if the
+ * scale between `0` and `MAX_SCALE`), if `floorScale` is not an integer, or if the
  * rounded quantity leaves the safe-integer range.
  *
  * @example Rounding down to whole shares (default)

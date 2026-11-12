@@ -9,10 +9,10 @@
   // Tests run under vitest (`deno task test`), not Deno's native runner.
   // Keep `deno test` from auto-discovering these vitest files.
   "test": {
-    "exclude": ["src/**/*.test.ts"],
+    "exclude": ["src/**/*.test.ts"]
   },
   "fmt": {
-    "exclude": ["assets/logo.svg"],
+    "exclude": ["assets/logo.svg"]
   },
   "imports": {
     "vitest": "npm:vitest@^5.1.0",
@@ -22,15 +22,15 @@
     "utils/": "./src/utils/",
     "shares/": "./src/shares/",
     "types/": "./src/types/",
-    "helpers/": "./src/helpers/",
+    "helpers/": "./src/helpers/"
   },
   "tasks": {
     "test": "deno run -A npm:vitest run",
-    "test:watch": "deno run -A npm:vitest",
+    "test:watch": "deno run -A npm:vitest"
   },
   "lint": {
     "rules": {
-      "tags": ["recommended"],
-    },
-  },
+      "tags": ["recommended"]
+    }
+  }
 }

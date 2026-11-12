@@ -115,7 +115,9 @@ operation works on that integer.
 range (±9 007 199 254 740 991). Portio never leaves that range silently:
 
 - Every function checks that the `quantity` it receives is a safe integer and
-  that `scale` is a non-negative integer.
+  that `scale` is an integer between `0` and `MAX_SCALE` (15). `10 ** 15` is the
+  largest power of ten that is still a safe integer: beyond that scale a
+  position could not even hold one whole share.
 - Every function checks its result. If a sum, a product or a scale alignment
   cannot be represented exactly, the function throws a `RangeError` instead of
   returning an approximation.
@@ -202,6 +204,16 @@ Portio covers the core `Shares` primitive: arithmetic (`add`, `subtract`,
 formatting. It does not include a NAV/valuation concept (pricing a position in
 money), nor a `bigint` representation for quantities beyond the safe-integer
 range.
+
+### Not supported: cryptocurrency units
+
+Portio is designed for fund shares and similar instruments. **Quantities of
+cryptocurrencies are not accepted**: their precision goes beyond what a safe
+integer can hold. Ether, for example, has 18 decimals — above `MAX_SCALE` (15) —
+so such a position is rejected with a `RangeError`, and even lower-precision
+tokens can exceed the safe-integer range with realistic amounts. Supporting them
+requires changes to the library (a `bigint` `quantity` and a higher scale
+limit), which changes the `Shares` type.
 
 ## Links
 

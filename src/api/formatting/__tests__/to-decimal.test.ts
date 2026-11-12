@@ -45,8 +45,8 @@ describe("toDecimal", () => {
     expect(toDecimal({ quantity: Number.MAX_SAFE_INTEGER, scale: 5 })).toBe(
       "90071992547.40991",
     );
-    expect(toDecimal({ quantity: -Number.MAX_SAFE_INTEGER, scale: 20 })).toBe(
-      "-0.00009007199254740991",
+    expect(toDecimal({ quantity: -Number.MAX_SAFE_INTEGER, scale: 15 })).toBe(
+      "-9.007199254740991",
     );
   });
 });

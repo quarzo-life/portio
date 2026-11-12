@@ -1,4 +1,5 @@
 export type { Shares } from "./types.ts";
+export { MAX_SCALE } from "./constants.ts";
 export * from "./comparisons/index.ts";
 export * from "./conversions/index.ts";
 export * from "./formatting/index.ts";

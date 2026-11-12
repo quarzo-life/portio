@@ -11,7 +11,7 @@ import { Shares } from "../types.ts";
  * @param shares - The position to check.
  * @returns `true` if the position is a whole number of shares.
  * @throws {RangeError} If the quantity is not a safe integer or the scale is
- * not a non-negative integer.
+ * not an integer between `0` and `MAX_SCALE`.
  *
  * @example Whole vs fractional positions
  * ```ts

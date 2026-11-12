@@ -31,8 +31,11 @@ describe("isInteger", () => {
     expect(isInteger({ quantity: -25, scale: 1 })).toBe(false);
   });
 
-  test("stays exact at a very large scale", () => {
-    expect(isInteger({ quantity: 1, scale: 400 })).toBe(false);
-    expect(isInteger({ quantity: 0, scale: 400 })).toBe(true);
+  test("stays exact at the largest scale", () => {
+    expect(isInteger({ quantity: 1, scale: 15 })).toBe(false);
+    expect(isInteger({ quantity: 0, scale: 15 })).toBe(true);
+    expect(isInteger({ quantity: 9_000_000_000_000_000, scale: 15 })).toBe(
+      true,
+    );
   });
 });

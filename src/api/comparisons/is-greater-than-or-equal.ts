@@ -12,7 +12,7 @@ import { Shares } from "../types.ts";
  * @param second - The second position.
  * @returns `true` if `first` represents at least as many shares as `second`.
  * @throws {RangeError} If a position is not valid (safe-integer quantity,
- * non-negative integer scale) or cannot be aligned exactly to the other's
+ * scale between `0` and `MAX_SCALE`) or cannot be aligned exactly to the other's
  * scale.
  *
  * @example Comparing across scales
