@@ -1,6 +1,6 @@
 {
   "name": "@quarzo-life/portio",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Safely track positions in UCITS fund shares (and other instruments) without float arithmetic on the share count.",
   "license": "MIT",
   "exports": "./mod.ts",

@@ -6,6 +6,11 @@
  * quantity as an integer avoids floating-point rounding errors when adding,
  * subtracting or comparing positions.
  *
+ * `quantity` must be a safe integer (`Number.isSafeInteger`) and `scale` a
+ * non-negative integer. Every function of the library checks this on its
+ * inputs and on its result, and throws a `RangeError` rather than returning
+ * an inexact value.
+ *
  * A `Shares` value carries no instrument identity — tracking which
  * instrument (e.g. an ISIN) a position belongs to is the caller's
  * responsibility.

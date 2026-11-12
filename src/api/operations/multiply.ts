@@ -1,16 +1,23 @@
+import { assertShares, safeInteger } from "../assertions.ts";
 import { Shares } from "../types.ts";
 
 /**
- * Multiplies a {@linkcode Shares} position by a factor.
+ * Multiplies a {@linkcode Shares} position by an integer factor.
  *
  * Curried: `multiply(n)` returns a function that scales a position, which
  * makes it convenient to map over several positions. The scale is preserved;
- * only the quantity is multiplied. Use an integer factor to guarantee the
- * resulting quantity stays an integer.
+ * only the quantity is multiplied.
  *
- * @param n - The multiplication factor.
+ * The factor must be an integer, so the resulting quantity is always an
+ * integer: `multiply(1.1)` throws instead of producing a fractional
+ * quantity. Use `multiply(-1)` to negate a position.
+ *
+ * @param n - The multiplication factor. Must be a safe integer.
  * @returns A function taking a `Shares` and returning it multiplied by `n`,
  * at the same scale.
+ * @throws {RangeError} If `n` is not a safe integer (thrown by
+ * `multiply(n)` itself), if the position is not valid, or if the product
+ * leaves the safe-integer range.
  *
  * @example Tripling a position
  * ```ts
@@ -33,9 +40,15 @@ import { Shares } from "../types.ts";
  * // [{ quantity: 20, scale: 0 }, { quantity: 250, scale: 2 }]
  * ```
  */
-export const multiply =
-  (n: number): (shares: Shares) => Shares =>
-  ({ quantity, scale }: Shares): Shares => ({
-    quantity: n * quantity,
-    scale,
-  });
+export const multiply = (n: number): (shares: Shares) => Shares => {
+  safeInteger(n, "multiplier");
+
+  return (shares: Shares): Shares => {
+    assertShares(shares);
+
+    return {
+      quantity: safeInteger(n * shares.quantity, "product"),
+      scale: shares.scale,
+    };
+  };
+};

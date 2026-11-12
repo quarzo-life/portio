@@ -1,3 +1,4 @@
+import { safeInteger } from "../assertions.ts";
 import { toScale } from "../conversions/to-scale.ts";
 import { Shares } from "../types.ts";
 
@@ -12,6 +13,9 @@ import { Shares } from "../types.ts";
  * @param first - The first position.
  * @param second - The second position.
  * @returns A new `Shares` at `max(first.scale, second.scale)`.
+ * @throws {RangeError} If an operand is not a valid position (safe-integer
+ * quantity, non-negative integer scale), or if an aligned quantity or the
+ * sum leaves the safe-integer range.
  *
  * @example Adding positions of different scales
  * ```ts
@@ -25,7 +29,10 @@ export const add = (first: Shares, second: Shares): Shares => {
   const targetScale = Math.max(first.scale, second.scale);
   const align = toScale(targetScale);
   return {
-    quantity: align(first).quantity + align(second).quantity,
+    quantity: safeInteger(
+      align(first).quantity + align(second).quantity,
+      "sum",
+    ),
     scale: targetScale,
   };
 };

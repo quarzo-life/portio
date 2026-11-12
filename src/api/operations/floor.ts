@@ -1,3 +1,4 @@
+import { assertShares, safeInteger } from "../assertions.ts";
 import { Shares } from "../types.ts";
 
 /**
@@ -11,8 +12,12 @@ import { Shares } from "../types.ts";
  *
  * @param shares - The position to round down.
  * @param floorScale - The number of decimal places to keep. Defaults to `0`
- * (round down to a whole number of shares).
+ * (round down to a whole number of shares). A position whose scale is
+ * already `floorScale` or less is returned unchanged.
  * @returns A new `Shares` at the same scale, rounded down.
+ * @throws {RangeError} If the position is not valid (safe-integer quantity,
+ * non-negative integer scale), if `floorScale` is not an integer, or if the
+ * rounded quantity leaves the safe-integer range.
  *
  * @example Rounding down to whole shares (default)
  * ```ts
@@ -34,10 +39,28 @@ import { Shares } from "../types.ts";
  * ```
  */
 export const floor = (
-  { quantity, scale }: Shares,
+  shares: Shares,
   floorScale: number = 0,
-): Shares => ({
-  quantity: Math.floor(quantity / 10 ** (scale - floorScale)) *
-    10 ** (scale - floorScale),
-  scale,
-});
+): Shares => {
+  assertShares(shares);
+  safeInteger(floorScale, "floorScale");
+  const { quantity, scale } = shares;
+
+  if (floorScale >= scale) {
+    return { quantity: safeInteger(quantity, "quantity"), scale };
+  }
+
+  const factor = 10 ** (scale - floorScale);
+  // `%` is exact and takes the sign of the quantity, so `quantity - rest` is
+  // the quantity truncated toward zero, without any float division.
+  const rest = quantity % factor;
+  const truncated = quantity - rest;
+
+  return {
+    quantity: safeInteger(
+      rest < 0 ? truncated - factor : truncated,
+      "rounded quantity",
+    ),
+    scale,
+  };
+};

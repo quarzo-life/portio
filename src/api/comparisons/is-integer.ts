@@ -1,3 +1,4 @@
+import { assertShares } from "../assertions.ts";
 import { Shares } from "../types.ts";
 
 /**
@@ -9,6 +10,8 @@ import { Shares } from "../types.ts";
  *
  * @param shares - The position to check.
  * @returns `true` if the position is a whole number of shares.
+ * @throws {RangeError} If the quantity is not a safe integer or the scale is
+ * not a non-negative integer.
  *
  * @example Whole vs fractional positions
  * ```ts
@@ -19,5 +22,9 @@ import { Shares } from "../types.ts";
  * isInteger({ quantity: 3, scale: 0 }); // true → 3 shares
  * ```
  */
-export const isInteger = ({ quantity, scale }: Shares): boolean =>
-  Number.isInteger(quantity / 10 ** scale);
+export const isInteger = (shares: Shares): boolean => {
+  assertShares(shares);
+
+  // Exact: `%` never rounds, unlike `quantity / 10 ** scale`.
+  return shares.quantity % 10 ** shares.scale === 0;
+};

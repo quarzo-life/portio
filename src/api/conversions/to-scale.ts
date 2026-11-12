@@ -1,3 +1,4 @@
+import { assertScale, assertShares, safeInteger } from "../assertions.ts";
 import { halfUp } from "../operations/divisions/half-up.ts";
 import { DivideOperation } from "../operations/divisions/types.ts";
 import { Shares } from "../types.ts";
@@ -9,13 +10,22 @@ import { Shares } from "../types.ts";
  * `target` decimal places. Increasing the scale is lossless (the quantity is
  * multiplied by a power of ten). Decreasing the scale requires rounding: the
  * quantity is divided using the provided {@linkcode DivideOperation},
- * `halfUp` by default.
+ * `halfUp` by default (nearest integer, ties toward positive infinity — so
+ * -1.4 becomes -1 and -1.5 becomes -1).
+ *
+ * The result is exact or the call throws: a conversion whose quantity, or
+ * whose power-of-ten factor, leaves the safe-integer range is rejected
+ * instead of returning an approximation. A zero position converts to any
+ * scale.
  *
  * @typeParam TargetScale - The target scale, trackable at the type level.
  * @param target - The scale to convert to.
  * @param divide - The rounding strategy used when the scale decreases.
  * Defaults to `halfUp`.
  * @returns A function converting a `Shares` to `Shares<TargetScale>`.
+ * @throws {RangeError} If `target` or the position's scale is not a
+ * non-negative integer, if the position's quantity is not a safe integer, or
+ * if the converted quantity cannot be represented as a safe integer.
  *
  * @example Increasing precision (lossless)
  * ```ts
@@ -31,6 +41,9 @@ import { Shares } from "../types.ts";
  *
  * toScale(0)({ quantity: 55, scale: 1 });
  * // { quantity: 6, scale: 0 } → 5.5 rounds up to 6 shares
+ *
+ * toScale(0)({ quantity: -14, scale: 1 });
+ * // { quantity: -1, scale: 0 } → -1.4 rounds to -1 share
  * ```
  *
  * @example Decreasing precision with a custom rounding strategy
@@ -47,17 +60,42 @@ import { Shares } from "../types.ts";
 export const toScale = <TargetScale extends number = number>(
   target: TargetScale,
   divide: DivideOperation = halfUp,
-): (shares: Shares) => Shares<TargetScale> =>
-({ quantity, scale }: Shares): Shares<TargetScale> => {
-  if (target > scale) {
+): (shares: Shares) => Shares<TargetScale> => {
+  assertScale(target, "target scale");
+
+  return (shares: Shares): Shares<TargetScale> => {
+    assertShares(shares);
+    const { quantity, scale } = shares;
+
+    if (target === scale || quantity === 0) {
+      return { quantity: safeInteger(quantity, "quantity"), scale: target };
+    }
+
+    if (target > scale) {
+      return {
+        quantity: safeInteger(
+          quantity * 10 ** (target - scale),
+          `quantity at scale ${target}`,
+        ),
+        scale: target,
+      };
+    }
+
+    const factor = 10 ** (scale - target);
+
+    if (!Number.isSafeInteger(factor)) {
+      throw new RangeError(
+        `cannot convert from scale ${scale} to scale ${target}: ` +
+          `the factor 10 ** ${scale - target} is not a safe integer`,
+      );
+    }
+
     return {
-      quantity: quantity * 10 ** (target - scale),
+      quantity: safeInteger(
+        divide(quantity, factor),
+        `quantity at scale ${target}`,
+      ),
       scale: target,
     };
-  }
-
-  return {
-    quantity: divide(quantity, 10 ** (scale - target)),
-    scale: target,
   };
 };

@@ -1,3 +1,4 @@
+import { assertShares, safeInteger } from "../assertions.ts";
 import { Shares } from "../types.ts";
 
 /**
@@ -11,8 +12,12 @@ import { Shares } from "../types.ts";
  *
  * @param shares - The position to round up.
  * @param ceilScale - The number of decimal places to keep. Defaults to `0`
- * (round up to a whole number of shares).
+ * (round up to a whole number of shares). A position whose scale is
+ * already `ceilScale` or less is returned unchanged.
  * @returns A new `Shares` at the same scale, rounded up.
+ * @throws {RangeError} If the position is not valid (safe-integer quantity,
+ * non-negative integer scale), if `ceilScale` is not an integer, or if the
+ * rounded quantity leaves the safe-integer range.
  *
  * @example Rounding up to whole shares (default)
  * ```ts
@@ -34,10 +39,28 @@ import { Shares } from "../types.ts";
  * ```
  */
 export const ceil = (
-  { quantity, scale }: Shares,
+  shares: Shares,
   ceilScale: number = 0,
-): Shares => ({
-  quantity: Math.ceil(quantity / 10 ** (scale - ceilScale)) *
-    10 ** (scale - ceilScale),
-  scale,
-});
+): Shares => {
+  assertShares(shares);
+  safeInteger(ceilScale, "ceilScale");
+  const { quantity, scale } = shares;
+
+  if (ceilScale >= scale) {
+    return { quantity: safeInteger(quantity, "quantity"), scale };
+  }
+
+  const factor = 10 ** (scale - ceilScale);
+  // `%` is exact and takes the sign of the quantity, so `quantity - rest` is
+  // the quantity truncated toward zero, without any float division.
+  const rest = quantity % factor;
+  const truncated = quantity - rest;
+
+  return {
+    quantity: safeInteger(
+      rest > 0 ? truncated + factor : truncated,
+      "rounded quantity",
+    ),
+    scale,
+  };
+};

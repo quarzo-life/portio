@@ -25,4 +25,14 @@ describe("isInteger", () => {
   test("returns false when quantity is not a multiple of 10^scale at scale 2", () => {
     expect(isInteger({ quantity: 101, scale: 2 })).toBe(false);
   });
+
+  test("handles negative quantities", () => {
+    expect(isInteger({ quantity: -30, scale: 1 })).toBe(true);
+    expect(isInteger({ quantity: -25, scale: 1 })).toBe(false);
+  });
+
+  test("stays exact at a very large scale", () => {
+    expect(isInteger({ quantity: 1, scale: 400 })).toBe(false);
+    expect(isInteger({ quantity: 0, scale: 400 })).toBe(true);
+  });
 });

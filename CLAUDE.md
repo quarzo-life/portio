@@ -58,9 +58,10 @@ type Shares<Scale extends number = number> = {
 };
 ```
 
-A plain readonly object — there is no factory, no validation, no freezing;
-callers build literals directly. The real share count is
-`quantity / 10 ** scale` (e.g. `{ quantity: 12345, scale: 4 }` = 1.2345 shares).
+A plain readonly object — there is no factory and no freezing; callers build
+literals directly (validation happens inside each function, see below). The real
+share count is `quantity / 10 ** scale` (e.g. `{ quantity: 12345, scale: 4 }` =
+1.2345 shares).
 
 - **`Shares` has no concept of instrument identity.** Tracking which instrument
   (e.g. ISIN) a position belongs to is entirely the caller's responsibility
@@ -85,6 +86,13 @@ Everything is re-exported through per-folder `index.ts` barrels, then
 
 Cross-cutting patterns to preserve when adding API:
 
+- **Exact, or throw.** `quantity` is a `number`, exact only in the safe-integer
+  range. Every public function validates its inputs (`assertShares`) and wraps
+  its result in `safeInteger(...)` from `src/api/assertions.ts` (internal, not
+  exported), throwing a `RangeError` rather than returning an inexact or
+  non-integer quantity. Never divide floats to get a quantity: use `%` (exact)
+  and integer steps, as `halfUp`, `floor`, `ceil` and `toDecimal` do. A new
+  function must do the same, with tests at `Number.MAX_SAFE_INTEGER`.
 - **Binary ops align scale first.** See `add.ts`: both operands are converted to
   `Math.max(first.scale, second.scale)` via `toScale`, then combined. New ops
   between two `Shares` values should follow the same shape. Aligning upward is
@@ -99,9 +107,10 @@ Cross-cutting patterns to preserve when adding API:
 - **`floor`/`ceil` round the quantity while preserving scale** (they never
   truncate the scale itself): `floor({ quantity: 25, scale: 1 })` is
   `{ quantity: 20, scale: 1 }`, not `{ quantity: 2, scale: 0 }`. Both accept an
-  optional target precision (`floorScale`/`ceilScale`, default `0`).
-  `Math.floor`/`Math.ceil` give true toward-±infinity behavior for negative
-  quantities — preserve that if touching rounding.
+  optional target precision (`floorScale`/`ceilScale`, default `0`). Rounding is
+  true toward-±infinity for negative quantities — preserve that if touching
+  rounding. `halfUp` is nearest-integer with ties toward +infinity, negatives
+  included (-1.5 → -1).
 - **Every exported symbol carries JSDoc with `@example`.** Description first
   (behavioral notes: scale alignment, sign behavior, curried usage, throw
   conditions), then `@param`/`@returns`, then fenced ```ts examples importing

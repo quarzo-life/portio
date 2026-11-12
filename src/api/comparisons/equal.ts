@@ -12,6 +12,9 @@ import { Shares } from "../types.ts";
  * @param first - The first position.
  * @param second - The second position.
  * @returns `true` if both positions represent the same number of shares.
+ * @throws {RangeError} If a position is not valid (safe-integer quantity,
+ * non-negative integer scale) or cannot be aligned exactly to the other's
+ * scale.
  *
  * @example Comparing across scales
  * ```ts
